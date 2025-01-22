@@ -1,6 +1,5 @@
 from django.shortcuts import redirect, render
 from django import forms
-import time
 
 def ensure_turbo_frame(redirect_to, **redirect_kwargs):
     def _ensure_turbo_frame(view_func):
