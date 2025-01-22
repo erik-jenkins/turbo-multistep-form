@@ -1,0 +1,33 @@
+<form
+    action="{% url 'account-submit' %}"
+    method="post"
+    id="account-form"
+    novalidate
+>
+    {% csrf_token %}
+
+    <div>
+        <label for="account-email">Email</label>
+        <input
+            type="email"
+            name="email"
+            id="account-email"
+            value="{{ form.email.value }}"
+            data-turbo-permanent
+        />
+        {{ form.errors.email }}
+    </div>
+
+    <div>
+        <label for="account-password">Password</label>
+        <input
+            type="password"
+            name="password"
+            id="account-password"
+            data-turbo-permanent
+        />
+        {{ form.errors.password }}
+    </div>
+
+    <button type="submit">Next</button>
+</form>

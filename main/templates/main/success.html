@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %} {% block content %}
+<turbo-frame id="page">
+    <h1>Success!</h1>
+
+    <p>Thank you for signing up!</p>
+
+    <p>
+        <a href="{{ url 'account' }}">Let's do it again!</a>
+    </p>
+</turbo-frame>
+{% endblock %}

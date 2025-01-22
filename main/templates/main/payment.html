@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %} {% block content %}
+<turbo-frame id="page">
+    <div style="display: none">
+        {% include 'partials/account_form.html' %}
+        {% include 'partials/address_form.html' %}
+    </div>
+
+    <h1>Payment</h1>
+
+    {% include 'partials/payment_form.html' %}
+
+    <p>
+        <a href="{% url 'account' %}">Go directly to account</a>
+        <a href="{% url 'address' %}">Back</a>
+    </p>
+</turbo-frame>
+{% endblock %}

@@ -1,0 +1,20 @@
+<form
+    action="{% url 'submit' %}"
+    method="post"
+    id="payment-form"
+    data-turbo-permanent
+>
+    {% csrf_token %}
+
+    <div>
+        <label for="payment-card-number">Card #</label>
+        <input
+            type="text"
+            name="card_number"
+            id="payment-card-number"
+            data-turbo-permanent
+        />
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
