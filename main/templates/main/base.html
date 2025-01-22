@@ -5,8 +5,77 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Testing Turbo Permanent</title>
         <script src="https://unpkg.com/@hotwired/turbo@8.0.12/dist/turbo.es2017-umd.js"></script>
+        <script type="module">
+            import {
+                Application,
+                Controller,
+            } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js";
+            window.Stimulus = Application.start();
+
+            Stimulus.register(
+                "multi-form",
+                class extends Controller {
+                    static targets = ["form"];
+                    static values = { action: String };
+
+                    connect() {}
+
+                    submit(event) {
+                        const virtualForm = this.buildVirtualForm(event.target);
+                        event.target.insertAdjacentElement(
+                            "afterend",
+                            virtualForm,
+                        );
+                        // form.submit does not trigger Turbo handling of the form event,
+                        // so we have to dispatch the submit event manually to allow turbo
+                        // to handle it
+                        virtualForm.dispatchEvent(
+                            new CustomEvent("submit", { bubbles: true }),
+                        );
+                    }
+
+                    buildVirtualForm(triggerElement) {
+                        const form = document.createElement("form");
+                        form.method = "post";
+                        form.action = this.actionValue;
+                        form.hidden = true;
+
+                        const csrfInput = this.getCsrfInput(triggerElement);
+                        if (csrfInput) {
+                            form.appendChild(csrfInput.cloneNode());
+                        }
+
+                        this.formTargets.forEach((formElement) => {
+                            const dataInputs = this.getDataInputs(formElement);
+                            dataInputs.forEach((input) => {
+                                form.appendChild(input.cloneNode());
+                            });
+                        });
+
+                        return form;
+                    }
+
+                    getCsrfInput(formElement) {
+                        return formElement.querySelector(
+                            "input[name='csrfmiddlewaretoken']",
+                        );
+                    }
+
+                    getDataInputs(formElement) {
+                        return formElement.querySelectorAll(
+                            "input:not([name='csrfmiddlewaretoken']), select, textarea",
+                        );
+                    }
+                },
+            );
+        </script>
     </head>
     <body>
-        {% block content %}{% endblock %}
+        <div
+            data-controller="multi-form"
+            data-multi-form-action-value="{% url 'payment-submit' %}"
+        >
+            {% block content %}{% endblock %}
+        </div>
     </body>
 </html>

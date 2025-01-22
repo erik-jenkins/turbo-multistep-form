@@ -2,6 +2,7 @@
     action="{% url 'address-submit' %}"
     method="post"
     id="address-form"
+    data-multi-form-target="form"
     novalidate
 >
     {% csrf_token %}

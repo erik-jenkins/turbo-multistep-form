@@ -1,8 +1,9 @@
 <form
-    action="{% url 'submit' %}"
     method="post"
     id="payment-form"
-    data-turbo-permanent
+    data-multi-form-target="form"
+    data-action="submit->multi-form#submit:prevent"
+    novalidate
 >
     {% csrf_token %}
 
