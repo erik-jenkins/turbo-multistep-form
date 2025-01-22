@@ -1,9 +1,6 @@
 {% extends 'main/base.html' %} {% block content %}
 <turbo-frame id="page">
-    <div style="display: none">
-        {% include 'partials/account_form.html' %}
-        {% include 'partials/address_form.html' %}
-    </div>
+    {% include 'partials/hidden_forms.html' with form_type='payment' %}
 
     <h1>Payment</h1>
 

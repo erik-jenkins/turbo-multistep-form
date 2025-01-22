@@ -65,7 +65,6 @@ class PaymentForm(forms.Form):
 def payment_submit(request):
     account_form = AccountForm(request.POST)
     if not account_form.is_valid():
-        print('woot')
         return render(request, 'main/account.html', {'form': account_form})
 
     address_form = AddressForm(request.POST)

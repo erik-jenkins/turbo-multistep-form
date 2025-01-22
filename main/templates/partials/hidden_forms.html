@@ -1,0 +1,13 @@
+<div style="display: none;">
+    {% if not form_type == 'account' %}
+    {% include 'partials/account_form.html' %}
+    {% endif %}
+    
+    {% if not form_type == 'address' %}
+    {% include 'partials/address_form.html' %}
+    {% endif %}
+    
+    {% if not form_type == 'payment' %}
+    {% include 'partials/payment_form.html' %}
+    {% endif %}
+</div>
